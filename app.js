@@ -3,7 +3,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const twilio = require("twilio");
 const nodemailer = require("nodemailer");
-const fs = require("fs");
 require("dotenv").config();
 
 const app = express();
@@ -96,7 +95,7 @@ let transporter = nodemailer.createTransport({
 app.post("/sendmail", async (req, res) => {
     try {
         const { 
-            doctor_name, visaType, S_name, S_last, S_phone, S_email, 
+            doctor_name, visaType, S_name, S_last, phone, S_email, 
             Location_form, Location_to, moving_from_country, moving_to_country, 
             Location_to_state, Location_form_state, moving_form_state, moving_to_state, 
             message, service_type, userEmailsir, userEmailsir2, user_email, S_services 
@@ -106,7 +105,7 @@ app.post("/sendmail", async (req, res) => {
             ${doctor_name ? `<p><strong>Doctor:</strong> ${doctor_name}</p>` : ""}
             ${S_name ? `<p><strong>First Name:</strong> ${S_name}</p>` : ""}
             ${S_last ? `<p><strong>Last Name:</strong> ${S_last}</p>` : ""}
-            ${S_phone ? `<p><strong>Phone:</strong> ${S_phone}</p>` : ""}
+            ${S_phone ? `<p><strong>Phone:</strong> ${phone}</p>` : ""}
             ${S_email ? `<p><strong>Email:</strong> ${S_email}</p>` : ""}
             ${visaType ? `<p><strong>Visa Type:</strong> ${visaType}</p>` : ""}
             ${S_services ? `<p><strong>Service:</strong> ${S_services}</p>` : ""}
@@ -129,10 +128,14 @@ app.post("/sendmail", async (req, res) => {
             html: htmlBody,
         };
 
+
+        console.log(req.body)
+
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
                 return res.status(500).json({ success: false, message: "Error sending email", error: error.message });
             }
+
             res.status(200).json({ success: true, message: "Email sent successfully!", info: info.response });
         });
     } catch (error) {
