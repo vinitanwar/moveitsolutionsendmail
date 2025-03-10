@@ -95,7 +95,7 @@ let transporter = nodemailer.createTransport({
 app.post("/sendmail", async (req, res) => {
     try {
         const { 
-            doctor_name, visaType, S_name, S_last, phone, S_email, 
+            doctor_name, visaType,S_phone, S_name, S_last, phone, S_email, 
             Location_form, Location_to, moving_from_country, moving_to_country, 
             Location_to_state, Location_form_state, moving_form_state, moving_to_state, 
             message, service_type, userEmailsir, userEmailsir2, user_email, S_services 
