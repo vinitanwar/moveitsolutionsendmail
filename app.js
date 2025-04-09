@@ -10,6 +10,7 @@ const app = express();
 
 const allowedOrigins = [
   'https://www.futureittouch.com',
+  'http://localhost:3000',
   'https://himanshu.futuretouch.org'
 ];
 
