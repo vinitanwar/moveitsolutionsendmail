@@ -8,7 +8,11 @@ require("dotenv").config();
 const app = express();
 
 
-app.use(cors());
+app.use(cors({
+  origin: 'https://www.futureittouch.com',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // You can customize the methods
+  credentials: true // If you're using cookies or authorization headers
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
