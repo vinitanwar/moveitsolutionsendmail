@@ -8,11 +8,25 @@ require("dotenv").config();
 const app = express();
 
 
+const allowedOrigins = [
+  'https://www.futureittouch.com',
+  'https://himanshu.futuretouch.org'
+];
+
 app.use(cors({
-  origin: 'https://www.futureittouch.com',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // You can customize the methods
-  credentials: true // If you're using cookies or authorization headers
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps, curl, postman)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
 }));
+
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
